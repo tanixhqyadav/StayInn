@@ -6,7 +6,7 @@ import Layout from './Layout'
 import axios from 'axios'
 import  UserContextProvider  from './Context/UserContextProvider'
 import Account from './components/Account'
-import IndexPage from './components/Header'
+import IndexPage from './components/IndexPage'
 axios.defaults.baseURL='http://localhost:8080/api'
 axios.defaults.withCredentials=true
 function App() {
@@ -14,9 +14,11 @@ function App() {
     <UserContextProvider>
     <Routes>
       <Route path="/" element={<Layout/>}>
+        <Route index  element={<IndexPage/>}/>
         <Route path="/register" element={<RegisterPage/>} />
         <Route path="/login" element={<LoginPage/>} />
-        <Route path='/account' element={<Account/>}/>
+        <Route path='/account/:subpage?' element={<Account/>}/>
+        <Route path='/account/:subpage/:action' element={<Account/>}/>
       </Route>
     </Routes>
     </UserContextProvider>
