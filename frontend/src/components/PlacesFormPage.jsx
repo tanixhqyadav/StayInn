@@ -48,16 +48,18 @@ function PlacesFormPage() {
   }
     function uploadPhoto(ev){
     const files=ev.target.files;
+    console.log({files});
     const data=new FormData();
-    for(let i=0;i,files.length;i++){
+    for(let i=0;i<files.length;i++){
       data.append('photos',files[i]);
     }
     axios.post('/upload',data,{
       headers:{'Content-Type':'multipart/form-data'}
-    }).then(resposne =>{
-      const {data:filename}=resposne;
+    }).then(response =>{
+      const {data:filenames}=response;
+      console.log(filenames)
       setAddedPhotos(prev =>{
-        return [...prev,filename]
+        return [...prev,...filenames]
       });
     })
   }
@@ -78,7 +80,7 @@ function PlacesFormPage() {
         <div className=" mt-2 grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {addedPhotos.length >0 && addedPhotos.map(link => (
             <div key={link}>
-              <img src={`http://localhost:8080/uploads/${link.fileName}`} alt="uploaded" className="w-full h-24 object-cover rounded-2xl"/>
+              <img src={`http://localhost:8000/uploads/${link.fileName}`} alt="uploaded" className="w-full h-24 object-cover rounded-2xl"/>
           </div>
           ))}
             <label className='flex cursor-pointer items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600' >

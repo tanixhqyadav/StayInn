@@ -17,7 +17,7 @@ app.use(cors({
     credentials: true,
     origin: process.env.FRONTEND_URL
 }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(__dirname+'/uploads'));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

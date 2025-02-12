@@ -10,11 +10,12 @@ router.post('/register', async (req, res) => {
         {name, 
         email, 
         password:bcrypt.hashSync(password, bcryptSalt),
-    });}
+    });
+    res.json(user);
+}
     catch(err){
         return res.status(422).json({message:err.message});
     }
-    res.json(user);
 });
 
 module.exports = router;

@@ -7,7 +7,7 @@ import axios from 'axios'
 import  UserContextProvider  from './Context/UserContextProvider'
 import Account from './components/Account'
 import IndexPage from './components/IndexPage'
-axios.defaults.baseURL='http://localhost:8080/api'
+axios.defaults.baseURL='http://localhost:8000/api'
 axios.defaults.withCredentials=true
 function App() {
   return (
