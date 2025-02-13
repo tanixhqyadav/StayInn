@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const userLogout = require('./routes/userLogout');
 const userUploadbylink = require('./routes/userUploadbylink');
 const uploadPhoto=require('./routes/uploadPhoto');
+const userPlace=require('./routes/userPlace');
 dotenv.config();
 dbConnect();
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api',userProfile);
 app.use('/api',userLogout);
 app.use('/api',userUploadbylink);
 app.use('/api',uploadPhoto);
+app.use('/api',userPlace);
 
 
 
