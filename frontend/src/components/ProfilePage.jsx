@@ -5,7 +5,7 @@ import axios from 'axios';
 import PlacesPage from './PlacesPage';
 import AccountNav from '../utils/AccountNav';
 
-function Account() {
+function ProfilePage() {
   const [reDirect,setReDirect]=useState(false);
   const {ready,userInfo, setUserInfo}=useContext(UserContext);
   let {subpage}=useParams();
@@ -42,4 +42,4 @@ function Account() {
   )
 } 
 
-export default Account
+export default ProfilePage

@@ -3,6 +3,7 @@ import { Link , useParams ,Navigate } from 'react-router-dom'
 import Perks from '../utils/Perks';
 import axios from 'axios';
 import PhotoUploader from '../utils/PhotoUploader';
+import AccountNav from '../utils/AccountNav';
 function PlacesFormPage() {
   const {action}=useParams();
   const [title, setTitle] = useState('');
@@ -20,11 +21,33 @@ function PlacesFormPage() {
   
   async function addNewPlace(ev) {
     ev.preventDefault();
-    await axios.post('/places',{  title, address, 
-      description, photos: addedPhotos, perks, 
-      extraInfo,checkIn, checkOut, maxGuests, price });
-      setReDirect('/account/places');
-  }
+
+    // Check for missing fields
+    const missingFields = [];
+    if (!title) missingFields.push('Title');
+    if (!address) missingFields.push('Address');
+    if (!description) missingFields.push('Description');
+    if (!checkIn) missingFields.push('Check-In Time');
+    if (!checkOut) missingFields.push('Check-Out Time');
+    if (!maxGuests) missingFields.push('Max Guests');
+    if (!price) missingFields.push('Price');
+
+    // Show an alert with the missing fields
+    if (missingFields.length > 0) {
+        alert(`Please fill in the following required fields:\n- ${missingFields.join('\n- ')}`);
+        return;
+    }
+    try {
+        await axios.post('/places', {
+            title, address, 
+            description, photos: addedPhotos, perks, 
+            extraInfo, checkIn, checkOut, maxGuests, price
+        });
+        setReDirect(true);
+    } catch (error) {
+        alert(error.response?.data?.message || 'Failed to create place');
+    }
+}
   function inputHeader(text) {
     return (
       <h2 className="text-2xl mt-4">{text}</h2>
@@ -44,10 +67,11 @@ function PlacesFormPage() {
     );
   }
   if(reDirect){
-    return <Navigate to={reDirect}/>
+    return <Navigate to={'/account/places '}/>
   }
   return (
     <div>
+      <AccountNav/>
       <form onSubmit={addNewPlace}>
         {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
         <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt"/>
