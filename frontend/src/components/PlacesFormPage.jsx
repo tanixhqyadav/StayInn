@@ -1,10 +1,11 @@
-import React ,{useState} from 'react'
+import React ,{useEffect, useState} from 'react'
 import { Link , useParams ,Navigate } from 'react-router-dom'
 import Perks from '../utils/Perks';
 import axios from 'axios';
 import PhotoUploader from '../utils/PhotoUploader';
 import AccountNav from '../utils/AccountNav';
 function PlacesFormPage() {
+  const {id}=useParams();
   const {action}=useParams();
   const [title, setTitle] = useState('');
   const [address, setAddress] = useState('');
@@ -17,11 +18,45 @@ function PlacesFormPage() {
   const [maxGuests, setMaxGuests] = useState(1);
   const [price, setPrice] = useState(0);
   const [reDirect,setReDirect]=useState(false);
+  useEffect(() => {
+    if(!id) return;
+    axios.get(`/places/${id}`)
+    .then(response => {
+      const place = response.data;
+      setTitle(place.title);
+      setAddress(place.address);
+      setDescription(place.description);
+      setAddedPhotos(place.photos);
+      setPerks(place.perks);
+      setExtraInfo(place.extraInfo);
+      setCheckIn(place.checkIn);
+      setCheckOut(place.checkOut);
+      setMaxGuests(place.maxGuests);
+      setPrice(place.price);
+    }
+    )
+  }, [id]);
+      
   
   
-  async function addNewPlace(ev) {
+  async function savePlace(ev) {
     ev.preventDefault();
-
+    const placeData = {
+      id,
+      title, address, 
+      description, photos: addedPhotos, perks, 
+      extraInfo, checkIn, checkOut, maxGuests, price
+    }
+    if(id){ 
+      try {
+        await axios.put(`/places`,placeData);
+        setReDirect(true);
+    } catch (error) {
+        console.log(error);
+        alert(error.response?.data?.message || 'Failed to update place');
+    }
+  }
+    else{
     // Check for missing fields
     const missingFields = [];
     if (!title) missingFields.push('Title');
@@ -38,15 +73,12 @@ function PlacesFormPage() {
         return;
     }
     try {
-        await axios.post('/places', {
-            title, address, 
-            description, photos: addedPhotos, perks, 
-            extraInfo, checkIn, checkOut, maxGuests, price
-        });
+        await axios.post('/places', placeData);
         setReDirect(true);
     } catch (error) {
         alert(error.response?.data?.message || 'Failed to create place');
     }
+  }
 }
   function inputHeader(text) {
     return (
@@ -72,7 +104,7 @@ function PlacesFormPage() {
   return (
     <div>
       <AccountNav/>
-      <form onSubmit={addNewPlace}>
+      <form onSubmit={savePlace}>
         {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
         <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt"/>
         {preInput('Address', 'Address to this place')}

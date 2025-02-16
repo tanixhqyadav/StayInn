@@ -16,7 +16,7 @@ router.post('/upload', upload.array('photos', 100), (req, res) => {
         const ext = parts[parts.length - 1];
         const newPath = path + '.' + ext;
         fs.renameSync(path, newPath);
-        uploadFiles.push(newPath.replace('uploads/',''));
+        uploadFiles.push(newPath.replace(/\\/g, '/').replace('uploads/', ''));
     }
     res.json(uploadFiles);
 });

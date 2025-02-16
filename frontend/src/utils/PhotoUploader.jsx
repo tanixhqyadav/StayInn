@@ -37,9 +37,9 @@ function PhotoUploader({addedPhotos,onChange}) {
           <button onClick={addPhotoByLink} className='bg-gray-200 px-4 rounded-2xl '>Add</button>
         </div>
         <div className=" mt-2 grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-        {addedPhotos.length >0 && addedPhotos.map(link => (
-            <div className='h-32 flex' key={link.fileName}>
-              <img src={`http://localhost:8000/uploads/${link.fileName}`} alt="uploaded" className="w-full h-24 object-cover rounded-2xl position-center"/>
+        {addedPhotos.map(link => (
+            <div className='h-32 flex' key={link}>
+                <img src={`http://localhost:8000/uploads/${link}`} alt="uploaded" className="w-full h-24 object-cover rounded-2xl position-center"/>
             </div>
         ))}
             <label className='h-32 flex cursor-pointer items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600' >

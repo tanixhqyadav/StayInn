@@ -26,10 +26,10 @@ function PlacesPage() {
       </div>
     <div>
       {places.length > 0 && places.map(place => (
-        <Link to={'/account/places/'+place._id} className=' flex cursor-pointer gap-4 bg-gray-100 p-4 m-4 rounded-2xl' key={place.id}>
-          <div className='w-32 h-32 bg-gray-500 grow shrink-0 '>
+        <Link to={'/account/places/'+place._id} className='flex cursor-pointer gap-4 bg-gray-100 p-4 m-4 rounded-2xl' key={place._id}>
+        <div className='w-32 h-32 bg-gray-500 grow shrink-0 '>
             {place.photos.length > 0 && (
-              <img src={place.photos[0]} alt={place.title}  />
+              <img className='object-cover' src={'http://localhost:8000/uploads/'+place.photos[0]} alt={place.title}  />
             )}
           </div>
           <div className='grow-0 shrink' >
