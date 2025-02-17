@@ -4,7 +4,7 @@ const Place = require('../models/placeModel');
 const jwt = require('jsonwebtoken'); 
 
 
-router.get('/places', (req, res) => { 
+router.get('/user-places', (req, res) => { 
     const {token}=req.cookies;
     jwt.verify(token,process.env.JWT_SECRET,{},async(err,useData)=>{
         if(err){

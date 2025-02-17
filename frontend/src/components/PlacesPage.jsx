@@ -7,7 +7,7 @@ import axios from 'axios';
 function PlacesPage() {
   const [places, setPlaces] = useState([]);
   useEffect(() => {
-    axios.get('/places').then(({ data }) => {
+    axios.get('/user-places').then(({ data }) => {
       setPlaces(data);
     });
   }, []);
@@ -25,19 +25,22 @@ function PlacesPage() {
         </Link>
       </div>
     <div>
-      {places.length > 0 && places.map(place => (
-        <Link to={'/account/places/'+place._id} className='flex cursor-pointer gap-4 bg-gray-100 p-4 m-4 rounded-2xl' key={place._id}>
-        <div className='w-32 h-32 bg-gray-500 grow shrink-0 '>
-            {place.photos.length > 0 && (
-              <img className='object-cover' src={'http://localhost:8000/uploads/'+place.photos[0]} alt={place.title}  />
-            )}
-          </div>
-          <div className='grow-0 shrink' >
-            <h2 className='text-xl ' >{place.title}</h2>
-            <p className='text-sm mt-2' >{place.description}</p>
-          </div>
-        </Link>
-      ))}
+    {places.length > 0 && places.map((place, index) => (
+  <Link to={'/account/places/'+place._id} className='flex cursor-pointer gap-4 bg-gray-100 p-4 m-4 rounded-2xl' key={place._id || index}>
+    <div className='w-32 h-32 bg-gray-500 flex-none'>
+      {place.photos?.[0] ? (
+        <img className='object-cover w-full h-full' src={`http://localhost:8000/uploads/${place.photos[0]}`} alt={place.title || 'Place'} />
+      ) : (
+        <div className='bg-gray-300 w-full h-full flex items-center justify-center'>No Image</div>
+      )}
+    </div>
+    <div className='flex-1'>
+      <h2 className='text-xl font-bold'>{place.title || 'No Title'}</h2>
+      <p className='text-sm mt-2'>{place.description || 'No Description Available'}</p>
+    </div>
+  </Link>
+))}
+
     </div>
     </div>
     </>
