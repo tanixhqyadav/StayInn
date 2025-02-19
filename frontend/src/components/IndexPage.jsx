@@ -7,7 +7,7 @@ function IndexPage() {
 
   useEffect(() => {
     axios.get('/places').then(res => {
-      setPlaces([...res.data,...res.data,...res.data]);  //! Added ...res.data,...res.data to make sure we have enough data to display on the page
+      setPlaces(res.data);  //! Added ...res.data,...res.data to make sure we have enough data to display on the page
     })
   }, []);
 
