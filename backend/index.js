@@ -15,6 +15,7 @@ const placesShow=require('./routes/getplaces');
 const placeId=require('./routes/userPlaceId');
 const UpdatePlace=require('./routes/updatePlace');
 const allPlaces = require('./routes/allPlaces');
+const userBooking=require('./routes/userBooking')
 dotenv.config();
 dbConnect();
 const app = express();
@@ -39,6 +40,7 @@ app.use('/api',placesShow);
 app.use('/api',placeId);
 app.use('/api',UpdatePlace);
 app.use('/api',allPlaces);
+app.use('/api',userBooking);
 
 
 
