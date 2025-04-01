@@ -1,2 +1,2 @@
 # AirBnb
-This is a Airbnb project , i have used MERN technology  
+This is a Airbnb project , I have used MERN technology  
