@@ -17,6 +17,7 @@ AI-powered stay recommendations using user behavior analysis (possibly via machi
 Emergency Stay Finder feature for last-minute accommodations, leveraging real-time availability checks and location-based filtering.
  A more about the flow and model control flow of the projects 
 StayInn (To-Let Platform) — Project Flow and Architecture
+
 🔹 1. User Flow:
 User Side (Frontend):
 
